@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anna & Martin — 8. 8. 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #fdf8f2;
+      --blush:      #f2d9d0;
+      --rose:       #c9867a;
+      --dusty-rose: #e8b4aa;
+      --sage:       #8aab8e;
+      --cornflower: #7b9ec4;
+      --ink:        #2e2420;
+      --muted:      #7a6762;
+      --gold:       #c4a97a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── WATERCOLOUR SVG BACKGROUND ─────────────────────────── */
+    .wc-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: 0.18;
+    }
+
+    /* ── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: center; gap: 2.5rem;
+      padding: 1.2rem 2rem;
+      background: linear-gradient(to bottom, rgba(253,248,242,0.95), rgba(253,248,242,0));
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    nav a {
+      color: var(--muted); text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: var(--rose); }
+
+    /* ── SECTIONS GENERAL ───────────────────────────────────── */
+    section { position: relative; z-index: 1; }
+
+    /* ── HERO ───────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+    }
+
+    .hero-date {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0; animation: fadeUp 1s 0.3s forwards;
+    }
+
+    .hero-names {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      font-weight: 300; line-height: 1.05;
+      color: var(--ink);
+      margin: 0.6rem 0;
+      opacity: 0; animation: fadeUp 1s 0.6s forwards;
+    }
+    .hero-names em { font-style: italic; color: var(--rose); }
+
+    .hero-ampersand {
+      display: block;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: var(--dusty-rose); line-height: 1;
+    }
+
+    .hero-sub {
+      font-size: 0.88rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.5rem;
+      opacity: 0; animation: fadeUp 1s 0.9s forwards;
+    }
+
+    .hero-divider {
+      width: 120px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--dusty-rose), transparent);
+      margin: 2.5rem auto;
+      opacity: 0; animation: fadeUp 1s 1.1s forwards;
+    }
+
+    .hero-scroll {
+      font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0; animation: fadeUp 1s 1.5s forwards;
+    }
+    .hero-scroll::after {
+      content: ''; display: block; width: 1px; height: 40px;
+      background: var(--dusty-rose); margin: 0.8rem auto 0;
+      animation: pulse 2s 2s infinite;
+    }
+
+    /* FLOATING BOTANICALS */
+    .botanical {
+      position: absolute; pointer-events: none;
+      opacity: 0; animation: floatIn 1.5s ease forwards;
+    }
+    .b1 { top: 8%; left: 3%; animation-delay: 0.4s; }
+    .b2 { top: 12%; right: 4%; animation-delay: 0.7s; transform: scaleX(-1); }
+    .b3 { bottom: 15%; left: 2%; animation-delay: 1s; transform: rotate(30deg); }
+    .b4 { bottom: 10%; right: 3%; animation-delay: 1.2s; transform: scaleX(-1) rotate(-20deg); }
+
+    /* ── CONTENT SECTIONS ───────────────────────────────────── */
+    .section-inner {
+      max-width: 780px; margin: 0 auto; padding: 5rem 2rem;
+    }
+
+    .section-label {
+      font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--rose); display: block; margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 400; line-height: 1.15;
+      color: var(--ink); margin-bottom: 2rem;
+    }
+
+    p { line-height: 1.85; color: var(--muted); font-size: 0.97rem; }
+    p + p { margin-top: 1rem; }
+
+    /* ── TIMELINE ───────────────────────────────────────────── */
+    #schedule { background: linear-gradient(135deg, #fdf4ef 0%, #fdf8f2 100%); }
+
+    .timeline {
+      position: relative; padding-left: 2.5rem; margin-top: 2.5rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(to bottom, var(--dusty-rose), var(--sage));
+    }
+
+    .tl-item {
+      position: relative; margin-bottom: 2.2rem;
+      opacity: 0; transform: translateX(-20px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    .tl-item.visible { opacity: 1; transform: none; }
+
+    .tl-dot {
+      position: absolute; left: -2.9rem; top: 0.35rem;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--rose); border: 2px solid var(--cream);
+      box-shadow: 0 0 0 3px var(--dusty-rose);
+    }
+
+    .tl-time {
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 0.3rem;
+    }
+
+    .tl-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 400; color: var(--ink);
+    }
+
+    .tl-desc { font-size: 0.88rem; color: var(--muted); margin-top: 0.3rem; }
+
+    /* ── LOCATIONS ──────────────────────────────────────────── */
+    #locations { background: var(--cream); }
+
+    .locations-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      margin-top: 2.5rem;
+    }
+    @media (max-width: 600px) { .locations-grid { grid-template-columns: 1fr; } }
+
+    .loc-card {
+      border: 1px solid rgba(201,134,122,0.25);
+      border-radius: 4px; padding: 2rem;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(4px);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .loc-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(201,134,122,0.12);
+    }
+
+    .loc-icon { font-size: 1.6rem; margin-bottom: 1rem; display: block; }
+
+    .loc-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 400; color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .loc-card address {
+      font-style: normal; font-size: 0.88rem;
+      color: var(--muted); line-height: 1.7;
+    }
+
+    .loc-link {
+      display: inline-block; margin-top: 1.2rem;
+      font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--rose); text-decoration: none;
+      border-bottom: 1px solid var(--dusty-rose);
+      padding-bottom: 2px; transition: color 0.2s;
+    }
+    .loc-link:hover { color: var(--ink); }
+
+    /* ── MAP EMBEDS ─────────────────────────────────────────── */
+    .map-frame {
+      width: 100%; height: 220px; border: none;
+      border-radius: 4px; margin-top: 1rem;
+      filter: sepia(20%) saturate(80%);
+    }
+
+    /* ── DRESS CODE ─────────────────────────────────────────── */
+    #dresscode { background: linear-gradient(135deg, #f8ede8 0%, #fdf8f2 100%); }
+
+    .dress-palette {
+      display: flex; gap: 0.8rem; margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .swatch {
+      width: 60px; height: 60px; border-radius: 50%;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .swatch:hover { transform: scale(1.1); }
+
+    .dress-note {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: rgba(255,255,255,0.6);
+      border-left: 3px solid var(--dusty-rose);
+      padding: 1.2rem 1.5rem; border-radius: 0 4px 4px 0;
+      margin-top: 1.5rem;
+    }
+    .dress-note p { font-size: 0.9rem; }
+
+    /* ── GIFTS ──────────────────────────────────────────────── */
+    #gifts { background: var(--cream); }
+
+    .gift-poem {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-style: italic;
+      line-height: 2; color: var(--muted);
+      border: 1px solid rgba(201,134,122,0.2);
+      padding: 2.5rem 3rem;
+      background: rgba(255,255,255,0.5);
+      border-radius: 4px;
+      margin-top: 2rem;
+      position: relative;
+    }
+    .gift-poem::before, .gift-poem::after {
+      content: '"';
+      font-size: 5rem; line-height: 0;
+      color: var(--dusty-rose); opacity: 0.3;
+      position: absolute; font-style: normal;
+    }
+    .gift-poem::before { top: 2.5rem; left: 1.2rem; }
+    .gift-poem::after  { content: '"'; bottom: 1rem; right: 1.5rem; }
+
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      text-align: center; padding: 4rem 2rem;
+      background: var(--ink); color: rgba(253,248,242,0.5);
+      font-size: 0.78rem; letter-spacing: 0.15em;
+    }
+    footer strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; font-weight: 300;
+      color: var(--dusty-rose); margin-bottom: 0.5rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── ANIMATIONS ─────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatIn {
+      from { opacity: 0; transform: scale(0.85) translateY(20px); }
+      to   { opacity: 0.55; transform: none; }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
+      50%       { opacity: 1;   transform: scaleY(1.2); }
+    }
+
+    /* Scroll-reveal for all sections */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── SVATEBNÍ OBŘAD & HOSTINA INFO GRIDS ───────────────── */
+    #obrad   { background: linear-gradient(135deg, #fdf8f2 0%, #fdf4ef 100%); }
+    #hostina { background: var(--cream); }
+
+    .event-card {
+      border: 1px solid rgba(201,134,122,0.25);
+      border-radius: 4px;
+      padding: 2rem 2.5rem 2.5rem;
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(4px);
+      margin-top: 2rem;
+    }
+
+    /* Info columns row */
+    .event-info-row {
+      display: grid;
+      gap: 0;
+      border-bottom: 1px solid rgba(201,134,122,0.15);
+      margin-bottom: 2rem;
+    }
+    .event-info-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .event-info-row.cols-2 { grid-template-columns: 1fr 1fr; }
+
+    .event-col {
+      padding: 1.2rem 1.5rem 1.5rem;
+      border-right: 1px solid rgba(201,134,122,0.15);
+    }
+    .event-col:first-child { padding-left: 0; }
+    .event-col:last-child  { border-right: none; }
+
+    .event-col-label {
+      font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--rose); display: block; margin-bottom: 0.6rem;
+    }
+
+    .event-col-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 400; color: var(--ink);
+      line-height: 1.3; display: block; margin-bottom: 0.25rem;
+    }
+
+    .event-col-sub {
+      font-size: 0.85rem; color: var(--muted);
+      line-height: 1.6; display: block;
+    }
+
+    .event-col a {
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--rose); text-decoration: none;
+      border-bottom: 1px solid var(--dusty-rose);
+      padding-bottom: 1px; transition: color 0.2s;
+      display: inline-block; margin-top: 0.5rem;
+    }
+    .event-col a:hover { color: var(--ink); }
+
+    /* Responsive: stack columns on mobile */
+    @media (max-width: 600px) {
+      .event-info-row.cols-3,
+      .event-info-row.cols-2 { grid-template-columns: 1fr; }
+      .event-col {
+        border-right: none;
+        border-bottom: 1px solid rgba(201,134,122,0.15);
+        padding: 1rem 0;
+      }
+      .event-col:last-child { border-bottom: none; }
+      .event-card { padding: 1.5rem; }
+    }
+
+    /* ── ACCOMMODATION ──────────────────────────────────────── */
+    #ubytovani { background: linear-gradient(135deg, #fdf4ef 0%, #fdf8f2 100%); }
+
+    .hotel-card {
+      border: 1px solid rgba(201,134,122,0.25);
+      border-radius: 4px; padding: 2rem;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(4px);
+      margin-top: 2rem;
+    }
+
+    .hotel-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 400; color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .hotel-card address {
+      font-style: normal; font-size: 0.9rem;
+      color: var(--muted); line-height: 1.7;
+      margin-bottom: 0.2rem;
+    }
+
+    .hotel-card .loc-link { margin-top: 0.2rem; display: inline-block; }
+
+    .hotel-intro {
+      font-style: italic; color: var(--muted);
+      font-size: 0.97rem; line-height: 1.8;
+    }
+
+    /* ── IMPORTANT INFO ─────────────────────────────────────── */
+    #dulezite { background: var(--cream); }
+
+    .info-list {
+      margin-top: 2rem; display: flex;
+      flex-direction: column; gap: 1rem;
+    }
+
+    .info-item {
+      display: flex; align-items: flex-start; gap: 1.2rem;
+      padding: 1.4rem 1.8rem;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(201,134,122,0.2);
+      border-radius: 4px;
+      backdrop-filter: blur(4px);
+    }
+
+    .info-icon { font-size: 1.6rem; flex-shrink: 0; line-height: 1.3; }
+
+    .info-text strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 400;
+      color: var(--ink); margin-bottom: 0.2rem;
+    }
+
+    .info-text p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+    /* Mobile adjustments for new sections */
+    @media (max-width: 480px) {
+      .hotel-card { padding: 1.5rem; }
+      .info-item   { padding: 1.1rem 1.2rem; gap: 0.9rem; }
+      .info-icon   { font-size: 1.3rem; }
+    }
+
+    /* ── MOBILE & RESPONSIVE ────────────────────────────────── */
+
+    /* Tablet — 768px */
+    @media (max-width: 768px) {
+      .section-inner { padding: 4rem 1.5rem; }
+
+      nav { gap: 1.5rem; padding: 1rem 1.5rem; }
+      nav a { font-size: 0.72rem; letter-spacing: 0.14em; }
+
+      #hero { padding: 5.5rem 1.5rem 3.5rem; }
+
+      .botanical { opacity: 0.35 !important; }
+
+      .gift-poem { padding: 2rem 2rem; }
+
+      .dress-palette { gap: 0.6rem; }
+      .swatch { width: 48px; height: 48px; }
+    }
+
+    /* Phone — 480px */
+    @media (max-width: 480px) {
+      /* Nav: wrap to 2 rows if needed, tighter */
+      nav {
+        gap: 0.9rem 1.4rem;
+        padding: 0.85rem 1rem;
+        flex-wrap: wrap;
+      }
+      nav a { font-size: 0.67rem; letter-spacing: 0.1em; }
+
+      /* Hero */
+      #hero { padding: 5rem 1.2rem 3rem; overflow: hidden; }
+      .hero-names { font-size: clamp(2.6rem, 13vw, 5rem); }
+      .hero-sub   { font-size: 0.78rem; letter-spacing: 0.14em; }
+
+      /* Botanicals: hide on tiny screens to avoid overflow */
+      .botanical { display: none; }
+
+      /* Sections */
+      .section-inner { padding: 3rem 1.2rem; }
+      h2 { font-size: clamp(1.7rem, 7vw, 2.4rem); margin-bottom: 1.4rem; }
+
+      /* Timeline — stack time above title */
+      .timeline { padding-left: 1.8rem; }
+      .tl-dot   { left: -2.2rem; }
+      .tl-title { font-size: 1.2rem; }
+      .tl-time  { font-size: 0.68rem; }
+
+      /* Maps: make iframes taller for readability */
+      .map-frame { height: 200px; }
+
+      /* Dress swatches: smaller but still round */
+      .dress-palette { gap: 0.5rem; }
+      .swatch { width: 40px; height: 40px; }
+
+      /* Dress note: stack icon & text */
+      .dress-note { flex-direction: column; gap: 0.6rem; padding: 1rem; }
+
+      /* Gift poem */
+      .gift-poem {
+        padding: 1.8rem 1.5rem;
+        font-size: 1rem;
+      }
+      .gift-poem::before { top: 1.5rem; left: 0.8rem; font-size: 3.5rem; }
+      .gift-poem::after  { bottom: 0.5rem; right: 0.8rem; font-size: 3.5rem; }
+
+      /* Footer */
+      footer { padding: 3rem 1.2rem; }
+      footer strong { font-size: 1.5rem; }
+    }
+
+    /* Very small phones — 360px */
+    @media (max-width: 360px) {
+      nav { gap: 0.6rem 1rem; }
+      nav a { font-size: 0.6rem; }
+      .hero-names { font-size: clamp(2.2rem, 14vw, 4rem); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── WATERCOLOUR BG ──────────────────────────────────────── -->
+  <svg class="wc-bg" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="g1" cx="20%" cy="20%"><stop offset="0%" stop-color="#f2c4bc"/><stop offset="100%" stop-color="#fdf8f2" stop-opacity="0"/></radialGradient>
+      <radialGradient id="g2" cx="80%" cy="70%"><stop offset="0%" stop-color="#b6d4b8"/><stop offset="100%" stop-color="#fdf8f2" stop-opacity="0"/></radialGradient>
+      <radialGradient id="g3" cx="50%" cy="40%"><stop offset="0%" stop-color="#adc4e0"/><stop offset="100%" stop-color="#fdf8f2" stop-opacity="0"/></radialGradient>
+    </defs>
+    <ellipse cx="220" cy="180" rx="380" ry="280" fill="url(#g1)"/>
+    <ellipse cx="1200" cy="650" rx="360" ry="260" fill="url(#g2)"/>
+    <ellipse cx="740"  cy="450" rx="300" ry="200" fill="url(#g3)"/>
+  </svg>
+
+  <!-- ── NAV ────────────────────────────────────────────────── -->
+  <nav>
+    <a href="#obrad">Obřad</a>
+    <a href="#hostina">Hostina</a>
+    <a href="#schedule">Program</a>
+    <a href="#dresscode">Dress Code</a>
+    <a href="#ubytovani">Ubytování</a>
+    <a href="#dulezite">Info</a>
+    <a href="#gifts">Dary</a>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────────────── -->
+  <section id="hero">
+
+    <!-- Daisy SVG left-top -->
+    <svg class="botanical b1" width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.9">
+        <!-- stem -->
+        <path d="M80 140 Q72 110 68 80" stroke="#8aab8e" stroke-width="2" fill="none"/>
+        <!-- leaves -->
+        <path d="M72 105 Q55 95 50 80 Q65 88 72 105Z" fill="#a8c5ac"/>
+        <path d="M68 90  Q52 75 55 58 Q66 72 68 90Z"  fill="#8aab8e"/>
+        <!-- petals -->
+        <circle cx="68" cy="68" r="7" fill="#fdecea"/>
+        <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(0 68 68)"/>
+        <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(40 68 68)"/>
+        <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(80 68 68)"/>
+        <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(120 68 68)"/>
+        <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(160 68 68)"/>
+        <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(200 68 68)"/>
+        <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(240 68 68)"/>
+        <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(280 68 68)"/>
+        <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(320 68 68)"/>
+        <circle cx="68" cy="68" r="9" fill="#f5c97a"/>
+      </g>
+    </svg>
+
+    <!-- Cornflower SVG right-top -->
+    <svg class="botanical b2" width="140" height="160" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M70 150 Q65 120 60 90" stroke="#8aab8e" stroke-width="2" fill="none"/>
+      <path d="M63 115 Q45 100 42 82 Q58 92 63 115Z" fill="#a8c5ac"/>
+      <g>
+        <circle cx="60" cy="72" r="6" fill="#5a85c0"/>
+        <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(0 60 72)"/>
+        <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(45 60 72)"/>
+        <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(90 60 72)"/>
+        <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(135 60 72)"/>
+        <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(180 60 72)"/>
+        <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(225 60 72)"/>
+        <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(270 60 72)"/>
+        <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(315 60 72)"/>
+        <circle cx="60" cy="72" r="7" fill="#4a6fa5"/>
+      </g>
+    </svg>
+
+    <!-- Same at bottom -->
+    <svg class="botanical b3" width="150" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M80 140 Q72 110 68 80" stroke="#8aab8e" stroke-width="2" fill="none"/>
+      <path d="M72 105 Q55 95 50 80 Q65 88 72 105Z" fill="#a8c5ac"/>
+      <circle cx="68" cy="68" r="7" fill="#fdecea"/>
+      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(0 68 68)"/>
+      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(36 68 68)"/>
+      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(72 68 68)"/>
+      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(108 68 68)"/>
+      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(144 68 68)"/>
+      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(180 68 68)"/>
+      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(216 68 68)"/>
+      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(252 68 68)"/>
+      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(288 68 68)"/>
+      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(324 68 68)"/>
+      <circle cx="68" cy="68" r="9" fill="#f5c97a"/>
+    </svg>
+
+    <svg class="botanical b4" width="130" height="155" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M70 150 Q65 120 60 90" stroke="#8aab8e" stroke-width="2" fill="none"/>
+      <path d="M63 115 Q45 100 42 82 Q58 92 63 115Z" fill="#a8c5ac"/>
+      <circle cx="60" cy="72" r="6" fill="#5a85c0"/>
+      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(0 60 72)"/>
+      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(60 60 72)"/>
+      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(120 60 72)"/>
+      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(180 60 72)"/>
+      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(240 60 72)"/>
+      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(300 60 72)"/>
+      <circle cx="60" cy="72" r="7" fill="#4a6fa5"/>
+    </svg>
+
+    <p class="hero-date">8. srpna 2026</p>
+
+    <h1 class="hero-names">
+      <em>Anna</em>
+      <span class="hero-ampersand">&amp;</span>
+      <em>Martin</em>
+    </h1>
+
+    <p class="hero-sub">Reitknechtová &nbsp;✦&nbsp; Lanžhotský</p>
+
+    <div class="hero-divider"></div>
+
+    <p class="hero-scroll">Přejděte dolů</p>
+  </section>
+
+  <!-- ── SVATEBNÍ OBŘAD ────────────────────────────────────────── -->
+  <section id="obrad">
+    <div class="section-inner reveal">
+      <span class="section-label">8. 8. 2026</span>
+      <h2>Svatební obřad</h2>
+
+      <div class="event-card">
+        <div class="event-info-row cols-3">
+
+          <div class="event-col">
+            <span class="event-col-label">Kdy</span>
+            <span class="event-col-main">8. 8. 2026</span>
+            <span class="event-col-sub">v 11:30</span>
+          </div>
+
+          <div class="event-col">
+            <span class="event-col-label">Kde</span>
+            <span class="event-col-main">Dřevěný kostel</span>
+            <span class="event-col-sub">Blansko</span>
+            <a href="https://maps.google.com/?q=Dřevěný+kostel+sv.+Prokopa,+Blansko" target="_blank" rel="noopener">
+              Mapa &amp; adresa →
+            </a>
+          </div>
+
+          <div class="event-col">
+            <span class="event-col-label">Parkování</span>
+            <span class="event-col-main">Okolí kostela</span>
+            <span class="event-col-sub">Blansko</span>
+          </div>
+
+        </div>
+
+        <iframe
+          class="map-frame"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU3Lfw&q=Dřevěný+kostel+sv.+Prokopa,+Blansko"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOSTINA ───────────────────────────────────────────────── -->
+  <section id="hostina">
+    <div class="section-inner reveal">
+      <span class="section-label">Recepce &amp; večeře</span>
+      <h2>Hostina</h2>
+
+      <div class="event-card">
+        <div class="event-info-row cols-2">
+
+          <div class="event-col">
+            <span class="event-col-label">Kde</span>
+            <span class="event-col-main">Hotel Rakovec</span>
+            <span class="event-col-sub">Rakovecká 1335/13<br>635 00 Brno, Jihomoravský kraj</span>
+            <a href="https://maps.google.com/?q=Hotel+Rakovec,+Rakoveck%C3%A1+1335/13,+635+00+Brno" target="_blank" rel="noopener">
+              Otevřít v Mapách →
+            </a>
+          </div>
+
+          <div class="event-col">
+            <span class="event-col-label">Parkování</span>
+            <span class="event-col-main">V blízkém okolí</span>
+            <span class="event-col-sub">Možnost parkování v okolí hotelu</span>
+          </div>
+
+        </div>
+
+        <iframe
+          class="map-frame"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU3Lfw&q=Hotel+Rakovec,+Rakovecká+1335/13,+Brno"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCHEDULE ────────────────────────────────────────────── -->
+  <section id="schedule">
+    <div class="section-inner reveal">
+      <span class="section-label">Den svatby</span>
+      <h2>Svatební program</h2>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <span class="tl-time">14:30</span>
+          <div class="tl-title">Příjezd novomanželů</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <span class="tl-time">15:00</span>
+          <div class="tl-title">Servírovaný oběd</div>
+          <p class="tl-desc">· Přípitek – proslov otce nevěsty</p>
+        </div>
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <span class="tl-time">od 16:00</span>
+          <div class="tl-title">Cimbálová muzika Primáš</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <span class="tl-time">17:00</span>
+          <div class="tl-title">Přivítání odpoledních hostů</div>
+          <p class="tl-desc">Proslov svědků</p>
+        </div>
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <span class="tl-time">17:30</span>
+          <div class="tl-title">Krájení svatebního dortu</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <span class="tl-time">18:00</span>
+          <div class="tl-title">První novomanželský tanec</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <span class="tl-time">18:30</span>
+          <div class="tl-title">Večerní raut</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <span class="tl-time">19:00</span>
+          <div class="tl-title">Házení kytice a další svatební zábava</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DRESS CODE ──────────────────────────────────────────── -->
+  <section id="dresscode">
+    <div class="section-inner reveal">
+      <span class="section-label">Jak se obléknout</span>
+      <h2>Dress Code</h2>
+      <p>Chceme, aby se naši hosté cítili pohodlně a zároveň slavnostně. Inspirujte se barvami letní louky — různými odstíny <strong>růžové</strong> a <strong>zelené</strong>, které skvěle ladí s atmosférou dne.</p>
+
+      <div class="dress-palette">
+        <div class="swatch" style="background:#f4b8c8" title="Světlá růžová"></div>
+        <div class="swatch" style="background:#e8849a" title="Růžová"></div>
+        <div class="swatch" style="background:#c9607a" title="Sytá růžová"></div>
+        <div class="swatch" style="background:#a83d62" title="Malinová"></div>
+        <div class="swatch" style="background:#b5cc8e" title="Světlá zelená"></div>
+        <div class="swatch" style="background:#8aab8e" title="Šalvějová"></div>
+        <div class="swatch" style="background:#5a8a6a" title="Středně zelená"></div>
+        <div class="swatch" style="background:#2d6a4f" title="Tmavě zelená"></div>
+      </div>
+
+      <div class="dress-note">
+        <span style="font-size:1.4rem">🌸</span>
+        <p>Prosíme, vyhněte se <strong>čistě bílé, béžové</strong> a výrazně světlým barvám. Ty přenechte nevěstě.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ACCOMMODATION ────────────────────────────────────────── -->
+  <section id="ubytovani">
+    <div class="section-inner reveal">
+      <span class="section-label">Kde přespat</span>
+      <h2>Ubytování</h2>
+      <p class="hotel-intro">Pokud máte předem zajištěno.</p>
+
+      <div class="hotel-card">
+        <span class="loc-icon">🏨</span>
+        <h3>Hotel Fontána</h3>
+        <address>
+          Rozdrojovická 344/45<br>
+          635 00 Brno<br>
+          Jihomoravský kraj
+        </address>
+        <iframe
+          class="map-frame"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU3Lfw&q=Hotel+Fontána,+Rozdrojovická+344/45,+Brno"
+          allowfullscreen>
+        </iframe>
+        <a class="loc-link" href="https://goo.gl/maps/Ronrf1TG7UDppGU97" target="_blank" rel="noopener">
+          Otevřít v Mapách →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IMPORTANT INFO ─────────────────────────────────────────── -->
+  <section id="dulezite">
+    <div class="section-inner reveal">
+      <span class="section-label">Věci, které se hodí vědět</span>
+      <h2>Důležité info</h2>
+
+      <div class="info-list">
+
+        <div class="info-item">
+          <span class="info-icon">🧸</span>
+          <div class="info-text">
+            <strong>Svatba laděná bez dětí</strong>
+            <p>Přejeme si, aby si dospělí hosté mohli večer užít naplno. Děkujeme za pochopení.</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <span class="info-icon">🚌</span>
+          <div class="info-text">
+            <strong>Odvoz z večerní párty zajištěn</strong>
+            <p>Postaráme se o to, abyste se bezpečně dostali domů. Podrobnosti sdělíme na místě.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GIFTS ───────────────────────────────────────────────── -->
+  <section id="gifts">
+    <div class="section-inner reveal">
+      <span class="section-label">Svatební dary</span>
+      <h2>Dary</h2>
+
+      <div class="gift-poem">
+        Jestli si snad někdo se svatebním darem hlavu láme,<br>
+        potom vězte, že my dva už doma všechno máme.<br>
+        Potěší nás ale příspěvek v jakékoli výši,<br>
+        který nám rozpočet na líbánky zvýší.<br><br>
+        Děkujeme!
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────── -->
+  <footer>
+    <strong>Anna &amp; Martin</strong>
+    8. 8. 2026 &nbsp;✦&nbsp; Blansko &nbsp;✦&nbsp; Brno
+    <p style="margin-top:1rem; font-size:0.7rem; opacity:0.4;">S láskou vytvořeno pro náš velký den 🌼</p>
+  </footer>
+
+  <script>
+    // ── Scroll-reveal ─────────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          // also reveal child tl-items with stagger
+          e.target.querySelectorAll('.tl-item').forEach((item, i) => {
+            setTimeout(() => item.classList.add('visible'), i * 150);
+          });
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Active nav link ───────────────────────────────────────
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current
+          ? 'var(--rose)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
