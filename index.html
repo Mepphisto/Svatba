@@ -53,7 +53,7 @@
     nav a:hover { color: var(--rose); }
 
     /* ── SECTIONS GENERAL ───────────────────────────────────── */
-    section { position: relative; z-index: 1; }
+    section { position: relative; z-index: 1; overflow: visible; }
 
     /* ── HERO ───────────────────────────────────────────────── */
     #hero {
@@ -577,7 +577,6 @@
 
     /* ── PAGE-WIDE SCATTERED FLOWERS ───────────────────────── */
     .flower-scatter {
-      position: absolute;
       pointer-events: none;
       z-index: 0;
       opacity: 0;
@@ -954,82 +953,9 @@
           ? 'var(--rose)' : '';
       });
     });
+
     // ── Scattered flowers — placed relative to each section ──
-    // type 0: cream daisy (original), 1: cornflower blue, 2: pink daisy, 3: green wildflower
-
-    const daisy = (s, rot, flip) => `<div class="flower-scatter" style="transform:rotate(${rot}deg)${flip?' scaleX(-1)':''}"><svg width="${s}" height="${s}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M80 140 Q72 110 68 80" stroke="#8aab8e" stroke-width="2" fill="none"/>
-      <path d="M72 105 Q55 95 50 80 Q65 88 72 105Z" fill="#a8c5ac"/>
-      <path d="M68 90 Q52 75 55 58 Q66 72 68 90Z" fill="#8aab8e"/>
-      <circle cx="68" cy="68" r="7" fill="#fdecea"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(0 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(40 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(80 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(120 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(160 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(200 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(240 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(280 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(320 68 68)"/>
-      <circle cx="68" cy="68" r="9" fill="#f5c97a"/>
-    </svg></div>`;
-
-    const cornflower = (s, rot, flip) => `<div class="flower-scatter" style="transform:rotate(${rot}deg)${flip?' scaleX(-1)':''}"><svg width="${s}" height="${s}" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M70 150 Q65 120 60 90" stroke="#8aab8e" stroke-width="2" fill="none"/>
-      <path d="M63 115 Q45 100 42 82 Q58 92 63 115Z" fill="#a8c5ac"/>
-      <circle cx="60" cy="72" r="6" fill="#5a85c0"/>
-      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(0 60 72)"/>
-      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(45 60 72)"/>
-      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(90 60 72)"/>
-      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(135 60 72)"/>
-      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(180 60 72)"/>
-      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(225 60 72)"/>
-      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(270 60 72)"/>
-      <ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(315 60 72)"/>
-      <circle cx="60" cy="72" r="7" fill="#4a6fa5"/>
-    </svg></div>`;
-
-    // Pink daisy — deep rose centre, soft pink petals
-    const pinkDaisy = (s, rot, flip) => `<div class="flower-scatter" style="transform:rotate(${rot}deg)${flip?' scaleX(-1)':''}"><svg width="${s}" height="${s}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M80 145 Q74 115 70 82" stroke="#7dab82" stroke-width="2" fill="none"/>
-      <path d="M74 108 Q57 98 53 82 Q68 90 74 108Z" fill="#9dc4a0"/>
-      <path d="M70 93 Q54 78 57 61 Q68 75 70 93Z" fill="#7dab82"/>
-      <circle cx="68" cy="68" r="7" fill="#e8a0b0"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#f2c4ce" transform="rotate(0 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#f2c4ce" transform="rotate(40 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#edb8c5" transform="rotate(80 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#f2c4ce" transform="rotate(120 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#edb8c5" transform="rotate(160 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#f2c4ce" transform="rotate(200 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#edb8c5" transform="rotate(240 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#f2c4ce" transform="rotate(280 68 68)"/>
-      <ellipse cx="68" cy="52" rx="5" ry="10" fill="#edb8c5" transform="rotate(320 68 68)"/>
-      <circle cx="68" cy="68" r="9" fill="#c9667a"/>
-    </svg></div>`;
-
-    // Green wildflower — small clustered head, sage tones
-    const greenFlower = (s, rot, flip) => `<div class="flower-scatter" style="transform:rotate(${rot}deg)${flip?' scaleX(-1)':''}"><svg width="${s}" height="${s}" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M68 150 Q63 118 58 88" stroke="#6a9e70" stroke-width="2" fill="none"/>
-      <path d="M61 118 Q43 105 40 87 Q56 97 61 118Z" fill="#8aab8e"/>
-      <path d="M58 100 Q42 84 46 66 Q57 80 58 100Z" fill="#6a9e70"/>
-      <circle cx="58" cy="70" r="8" fill="#5a8f60"/>
-      <ellipse cx="58" cy="54" rx="4" ry="9" fill="#7dbe84" transform="rotate(0 58 70)"/>
-      <ellipse cx="58" cy="54" rx="4" ry="9" fill="#9acfa0" transform="rotate(45 58 70)"/>
-      <ellipse cx="58" cy="54" rx="4" ry="9" fill="#7dbe84" transform="rotate(90 58 70)"/>
-      <ellipse cx="58" cy="54" rx="4" ry="9" fill="#9acfa0" transform="rotate(135 58 70)"/>
-      <ellipse cx="58" cy="54" rx="4" ry="9" fill="#7dbe84" transform="rotate(180 58 70)"/>
-      <ellipse cx="58" cy="54" rx="4" ry="9" fill="#9acfa0" transform="rotate(225 58 70)"/>
-      <ellipse cx="58" cy="54" rx="4" ry="9" fill="#7dbe84" transform="rotate(270 58 70)"/>
-      <ellipse cx="58" cy="54" rx="4" ry="9" fill="#9acfa0" transform="rotate(315 58 70)"/>
-      <circle cx="58" cy="70" r="5" fill="#4a7a50"/>
-    </svg></div>`;
-
-    const render = (type, s, rot, flip) => {
-      if (type === 0) return daisy(s, rot, flip);
-      if (type === 1) return cornflower(s, rot, flip);
-      if (type === 2) return pinkDaisy(s, rot, flip);
-      return greenFlower(s, rot, flip);
-    };
+    // type 0: cream daisy, 1: cornflower blue, 2: pink daisy, 3: green wildflower
 
     // Per-section: [topPct%, leftPct%, type(0=cream,1=blue,2=pink,3=green), size, rot, flip]
     const sectionFlowers = {
@@ -1054,10 +980,19 @@
       const section = document.getElementById(id);
       if (!section) return;
       placements.forEach(([topPct, leftPct, type, size, rot, flip]) => {
-        const wrapper = document.createElement('div');
-        wrapper.style.cssText = `position:absolute;top:${topPct}%;left:${leftPct}%;pointer-events:none;z-index:0;animation-delay:${0.1 + delayIdx * 0.06}s;`;
-        wrapper.innerHTML = render(type, size, rot, flip);
-        section.appendChild(wrapper);
+        // Build the SVG string (without the outer .flower-scatter div wrapper)
+        const svgMap = {
+          0: `<svg width="${size}" height="${size}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M80 140 Q72 110 68 80" stroke="#8aab8e" stroke-width="2" fill="none"/><path d="M72 105 Q55 95 50 80 Q65 88 72 105Z" fill="#a8c5ac"/><path d="M68 90 Q52 75 55 58 Q66 72 68 90Z" fill="#8aab8e"/><circle cx="68" cy="68" r="7" fill="#fdecea"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(0 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(40 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(80 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(120 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(160 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(200 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(240 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(280 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#fdecea" transform="rotate(320 68 68)"/><circle cx="68" cy="68" r="9" fill="#f5c97a"/></svg>`,
+          1: `<svg width="${size}" height="${size}" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M70 150 Q65 120 60 90" stroke="#8aab8e" stroke-width="2" fill="none"/><path d="M63 115 Q45 100 42 82 Q58 92 63 115Z" fill="#a8c5ac"/><circle cx="60" cy="72" r="6" fill="#5a85c0"/><ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(0 60 72)"/><ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(45 60 72)"/><ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(90 60 72)"/><ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(135 60 72)"/><ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(180 60 72)"/><ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(225 60 72)"/><ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(270 60 72)"/><ellipse cx="60" cy="58" rx="4.5" ry="10" fill="#7b9ec4" transform="rotate(315 60 72)"/><circle cx="60" cy="72" r="7" fill="#4a6fa5"/></svg>`,
+          2: `<svg width="${size}" height="${size}" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M80 145 Q74 115 70 82" stroke="#7dab82" stroke-width="2" fill="none"/><path d="M74 108 Q57 98 53 82 Q68 90 74 108Z" fill="#9dc4a0"/><path d="M70 93 Q54 78 57 61 Q68 75 70 93Z" fill="#7dab82"/><circle cx="68" cy="68" r="7" fill="#e8a0b0"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#f2c4ce" transform="rotate(0 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#f2c4ce" transform="rotate(40 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#edb8c5" transform="rotate(80 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#f2c4ce" transform="rotate(120 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#edb8c5" transform="rotate(160 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#f2c4ce" transform="rotate(200 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#edb8c5" transform="rotate(240 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#f2c4ce" transform="rotate(280 68 68)"/><ellipse cx="68" cy="52" rx="5" ry="10" fill="#edb8c5" transform="rotate(320 68 68)"/><circle cx="68" cy="68" r="9" fill="#c9667a"/></svg>`,
+          3: `<svg width="${size}" height="${size}" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M68 150 Q63 118 58 88" stroke="#6a9e70" stroke-width="2" fill="none"/><path d="M61 118 Q43 105 40 87 Q56 97 61 118Z" fill="#8aab8e"/><path d="M58 100 Q42 84 46 66 Q57 80 58 100Z" fill="#6a9e70"/><circle cx="58" cy="70" r="8" fill="#5a8f60"/><ellipse cx="58" cy="54" rx="4" ry="9" fill="#7dbe84" transform="rotate(0 58 70)"/><ellipse cx="58" cy="54" rx="4" ry="9" fill="#9acfa0" transform="rotate(45 58 70)"/><ellipse cx="58" cy="54" rx="4" ry="9" fill="#7dbe84" transform="rotate(90 58 70)"/><ellipse cx="58" cy="54" rx="4" ry="9" fill="#9acfa0" transform="rotate(135 58 70)"/><ellipse cx="58" cy="54" rx="4" ry="9" fill="#7dbe84" transform="rotate(180 58 70)"/><ellipse cx="58" cy="54" rx="4" ry="9" fill="#9acfa0" transform="rotate(225 58 70)"/><ellipse cx="58" cy="54" rx="4" ry="9" fill="#7dbe84" transform="rotate(270 58 70)"/><ellipse cx="58" cy="54" rx="4" ry="9" fill="#9acfa0" transform="rotate(315 58 70)"/><circle cx="58" cy="70" r="5" fill="#4a7a50"/></svg>`,
+        };
+        const transformVal = `rotate(${rot}deg)${flip ? ' scaleX(-1)' : ''}`;
+        const el = document.createElement('div');
+        el.className = 'flower-scatter';
+        el.style.cssText = `position:absolute;top:${topPct}%;left:${leftPct}%;transform:${transformVal};pointer-events:none;z-index:0;animation-delay:${0.1 + delayIdx * 0.06}s;`;
+        el.innerHTML = svgMap[type] || svgMap[0];
+        section.appendChild(el);
         delayIdx++;
       });
     });
