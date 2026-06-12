@@ -108,11 +108,13 @@
         height: 100vh;
         z-index: 150;
         /* fully reset desktop gradient & strip — invisible until open */
-        background: rgba(253,248,242,0.97);
-        background-image: none;
+        background: rgba(253,248,242,0.97) !important;
+        background-image: none !important;
         border: none;
         box-shadow: none;
         visibility: hidden;
+        /* prevent desktop full-width strip from painting */
+        clip-path: inset(0);
         /* layout */
         flex-direction: column; justify-content: center;
         align-items: flex-start; gap: 0;
