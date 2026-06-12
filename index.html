@@ -22,14 +22,13 @@
       --gold:       #c4a97a;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       background-color: var(--cream);
       color: var(--ink);
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      overflow-x: hidden;
     }
 
     /* ── WATERCOLOUR SVG BACKGROUND ─────────────────────────── */
@@ -108,10 +107,12 @@
         width: min(75vw, 300px);
         height: 100vh;
         z-index: 150;
-        /* reset desktop styles that bleed through */
+        /* fully reset desktop gradient & strip — invisible until open */
         background: rgba(253,248,242,0.97);
+        background-image: none;
         border: none;
         box-shadow: none;
+        visibility: hidden;
         /* layout */
         flex-direction: column; justify-content: center;
         align-items: flex-start; gap: 0;
@@ -120,11 +121,16 @@
         /* slide off-screen; no shadow until open */
         transform: translateX(100%);
         transition: transform 0.35s cubic-bezier(0.4,0,0.2,1),
-                    box-shadow 0.35s ease;
+                    box-shadow 0.35s ease,
+                    visibility 0s 0.35s;
       }
       nav.open {
         transform: translateX(0);
         box-shadow: -8px 0 32px rgba(46,36,32,0.12);
+        visibility: visible;
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1),
+                    box-shadow 0.35s ease,
+                    visibility 0s 0s;
       }
       nav a {
         font-size: 0.95rem; letter-spacing: 0.2em;
@@ -379,7 +385,7 @@
     .dress-note p { font-size: 0.9rem; }
 
     /* ── GIFTS ──────────────────────────────────────────────── */
-    #gifts { background: var(--cream); }
+    #gifts { background: #fdf8f2; }
 
     .gift-poem {
       font-family: 'Cormorant Garamond', serif;
@@ -388,10 +394,11 @@
       text-align: center;
       border: 1px solid rgba(201,134,122,0.2);
       padding: 2.5rem 3rem;
-      background: rgba(255,255,255,0.5);
+      background: #fff;
       border-radius: 4px;
       margin-top: 2rem;
       position: relative;
+      overflow: hidden;
     }
     .gift-poem::before, .gift-poem::after {
       content: '"';
@@ -413,10 +420,15 @@
 
     /* ── FOOTER ─────────────────────────────────────────────── */
     .footer-floral {
-      line-height: 0; overflow: visible;
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      line-height: 0;
+      overflow: visible;
       background: var(--cream);
     }
-    .footer-floral svg { display: block; width: 100%; height: 140px; }
+    .footer-floral svg { display: block; width: 100%; height: 140px; min-width: 100%; }
     footer {
       text-align: center; padding: 4rem 2rem;
       background: var(--ink); color: rgba(253,248,242,0.5);
@@ -1171,7 +1183,7 @@
 
   <!-- ── FOOTER ──────────────────────────────────────────────── -->
   <div class="footer-floral" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 140" preserveAspectRatio="xMidYMax meet">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 140" preserveAspectRatio="none" style="display:block;width:100%;height:140px;">
       <!-- ground fill transition -->
       <path d="M0 140 L1200 140 L1200 110 Q600 100 0 110 Z" fill="var(--ink)" opacity="0.92"/>
       <!-- grassy stems rising from ground -->
@@ -1386,7 +1398,7 @@
     // 7 flowers: cream daisy, pink daisy, blue cornflower, green wildflower × 4 more
     // Mini flower garden divider — same palette as footer garden, ~half the height (70px canvas)
     // Stems root at y=58, ground line at y=62, flowers bloom above; gradient splits at y=35 (midpoint)
-    const bouquetSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 70" preserveAspectRatio="xMidYMax meet" style="display:block;width:100%;height:70px;">
+    const bouquetSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 70" preserveAspectRatio="none" style="display:block;width:100%;height:70px;">
       <!-- stems -->
       <g opacity="0.7">
         <path d="M60 68 Q58 55 55 42" stroke="#6a9e70" stroke-width="1.2" fill="none"/>
@@ -1521,11 +1533,14 @@
       // SVG is 1200×70; gradient splits at 50% so top half = color above, bottom half = color below
       wrapper.style.cssText = [
         'width:100%',
+        'margin:0',
+        'padding:0',
         'line-height:0',
         'pointer-events:none',
-        'text-align:center',
+        'display:block',
         `background:linear-gradient(to bottom, ${colorAbove} 0%, ${colorAbove} 50%, ${colorBelow} 50%, ${colorBelow} 100%)`,
         'position:relative',
+        'left:0',
         'z-index:1',
         'overflow:visible',
       ].join(';');
