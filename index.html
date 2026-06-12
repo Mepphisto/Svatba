@@ -55,11 +55,15 @@
     /* ── HAMBURGER ──────────────────────────────────────────── */
     .nav-toggle {
       display: none;
-      flex-direction: column; justify-content: center; gap: 5px;
-      width: 36px; height: 36px;
+      flex-direction: row; align-items: center; gap: 8px;
       background: none; border: none; cursor: pointer;
       position: fixed; top: 1rem; right: 1.2rem; z-index: 200;
       padding: 4px;
+    }
+    .nav-toggle-bars {
+      display: flex; flex-direction: column;
+      justify-content: center; gap: 5px;
+      width: 24px;
     }
     .nav-toggle span {
       display: block; height: 2px; width: 24px;
@@ -68,30 +72,55 @@
       transition: all 0.3s ease;
       transform-origin: center;
     }
+    .nav-toggle-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--muted);
+      transition: color 0.3s;
+      user-select: none;
+    }
+    .nav-toggle.open .nav-toggle-label { color: var(--rose); }
     .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+    /* Dim overlay behind the panel */
+    .nav-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 149;
+      background: rgba(46,36,32,0.35);
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .nav-overlay.open { opacity: 1; }
+
     @media (max-width: 640px) {
       .nav-toggle { display: flex; }
+      .nav-overlay { display: block; pointer-events: none; }
+      .nav-overlay.open { pointer-events: auto; }
+
       nav {
-        flex-direction: column; justify-content: flex-start;
-        align-items: center; gap: 0;
-        padding: 0;
-        background: rgba(253,248,242,0.98);
-        backdrop-filter: blur(8px);
-        top: 0; left: 0; right: 0; bottom: 0;
+        flex-direction: column; justify-content: center;
+        align-items: flex-start; gap: 0;
+        padding: 4rem 0 2rem;
+        background: rgba(253,248,242,0.97);
+        backdrop-filter: blur(12px);
+        position: fixed;
+        top: 0; right: 0; bottom: 0;
+        left: auto;
+        width: min(75vw, 300px);
         height: 100vh;
-        justify-content: center;
         transform: translateX(100%);
         transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+        box-shadow: -8px 0 32px rgba(46,36,32,0.12);
       }
       nav.open { transform: translateX(0); }
       nav a {
-        font-size: 1rem; letter-spacing: 0.2em;
+        font-size: 0.95rem; letter-spacing: 0.2em;
         padding: 1rem 2rem;
         border-bottom: 1px solid rgba(0,0,0,0.05);
-        width: 100%; text-align: center;
+        width: 100%; text-align: left;
       }
       nav a:last-child { border-bottom: none; }
     }
@@ -368,10 +397,10 @@
 
     /* ── FOOTER ─────────────────────────────────────────────── */
     .footer-floral {
-      line-height: 0; overflow: hidden;
+      line-height: 0; overflow: visible;
       background: var(--cream);
     }
-    .footer-floral svg { display: block; width: 100%; height: 80px; }
+    .footer-floral svg { display: block; width: 100%; height: 140px; }
     footer {
       text-align: center; padding: 4rem 2rem;
       background: var(--ink); color: rgba(253,248,242,0.5);
@@ -656,8 +685,10 @@
   </svg>
 
   <!-- ── NAV ────────────────────────────────────────────────── -->
+  <div class="nav-overlay" id="nav-overlay"></div>
   <button class="nav-toggle" aria-label="Otevřít menu" aria-expanded="false">
-    <span></span><span></span><span></span>
+    <div class="nav-toggle-bars"><span></span><span></span><span></span></div>
+    <span class="nav-toggle-label">Menu</span>
   </button>
   <nav id="main-nav">
     <a href="#obrad">Obřad</a>
@@ -1035,33 +1066,33 @@
 
   <!-- ── FOOTER ──────────────────────────────────────────────── -->
   <div class="footer-floral" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 80" preserveAspectRatio="xMidYMax slice">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 140" preserveAspectRatio="xMidYMax meet">
       <!-- ground fill transition -->
-      <path d="M0 80 L1200 80 L1200 55 Q600 45 0 55 Z" fill="var(--ink)" opacity="0.92"/>
+      <path d="M0 140 L1200 140 L1200 110 Q600 100 0 110 Z" fill="var(--ink)" opacity="0.92"/>
       <!-- grassy stems rising from ground -->
       <g opacity="0.75">
         <!-- repeat stem pattern across width -->
-        <path d="M60 78 Q58 62 55 48" stroke="#6a9e70" stroke-width="1.5" fill="none"/>
-        <path d="M120 78 Q118 60 116 44" stroke="#8aab8e" stroke-width="1.3" fill="none"/>
-        <path d="M190 78 Q192 58 195 42" stroke="#7dab82" stroke-width="1.5" fill="none"/>
-        <path d="M260 78 Q258 63 255 50" stroke="#6a9e70" stroke-width="1.2" fill="none"/>
-        <path d="M330 78 Q332 60 336 44" stroke="#8aab8e" stroke-width="1.4" fill="none"/>
-        <path d="M400 78 Q398 62 395 47" stroke="#7dab82" stroke-width="1.3" fill="none"/>
-        <path d="M470 78 Q472 58 476 42" stroke="#6a9e70" stroke-width="1.5" fill="none"/>
-        <path d="M540 78 Q538 63 535 49" stroke="#8aab8e" stroke-width="1.2" fill="none"/>
-        <path d="M610 78 Q612 60 616 44" stroke="#7dab82" stroke-width="1.4" fill="none"/>
-        <path d="M680 78 Q678 62 675 48" stroke="#6a9e70" stroke-width="1.3" fill="none"/>
-        <path d="M750 78 Q752 58 756 43" stroke="#8aab8e" stroke-width="1.5" fill="none"/>
-        <path d="M820 78 Q818 63 815 50" stroke="#7dab82" stroke-width="1.2" fill="none"/>
-        <path d="M890 78 Q892 60 896 44" stroke="#6a9e70" stroke-width="1.4" fill="none"/>
-        <path d="M960 78 Q958 62 955 47" stroke="#8aab8e" stroke-width="1.3" fill="none"/>
-        <path d="M1030 78 Q1032 58 1036 42" stroke="#7dab82" stroke-width="1.5" fill="none"/>
-        <path d="M1100 78 Q1098 63 1095 49" stroke="#6a9e70" stroke-width="1.2" fill="none"/>
-        <path d="M1160 78 Q1162 60 1166 45" stroke="#8aab8e" stroke-width="1.4" fill="none"/>
+        <path d="M60 138 Q58 115 55 88" stroke="#6a9e70" stroke-width="1.5" fill="none"/>
+        <path d="M120 138 Q118 112 116 84" stroke="#8aab8e" stroke-width="1.3" fill="none"/>
+        <path d="M190 138 Q192 110 195 82" stroke="#7dab82" stroke-width="1.5" fill="none"/>
+        <path d="M260 138 Q258 115 255 90" stroke="#6a9e70" stroke-width="1.2" fill="none"/>
+        <path d="M330 138 Q332 112 336 84" stroke="#8aab8e" stroke-width="1.4" fill="none"/>
+        <path d="M400 138 Q398 114 395 87" stroke="#7dab82" stroke-width="1.3" fill="none"/>
+        <path d="M470 138 Q472 110 476 82" stroke="#6a9e70" stroke-width="1.5" fill="none"/>
+        <path d="M540 138 Q538 115 535 89" stroke="#8aab8e" stroke-width="1.2" fill="none"/>
+        <path d="M610 138 Q612 112 616 84" stroke="#7dab82" stroke-width="1.4" fill="none"/>
+        <path d="M680 138 Q678 114 675 88" stroke="#6a9e70" stroke-width="1.3" fill="none"/>
+        <path d="M750 138 Q752 110 756 83" stroke="#8aab8e" stroke-width="1.5" fill="none"/>
+        <path d="M820 138 Q818 115 815 90" stroke="#7dab82" stroke-width="1.2" fill="none"/>
+        <path d="M890 138 Q892 112 896 84" stroke="#6a9e70" stroke-width="1.4" fill="none"/>
+        <path d="M960 138 Q958 114 955 87" stroke="#8aab8e" stroke-width="1.3" fill="none"/>
+        <path d="M1030 138 Q1032 110 1036 82" stroke="#7dab82" stroke-width="1.5" fill="none"/>
+        <path d="M1100 138 Q1098 115 1095 89" stroke="#6a9e70" stroke-width="1.2" fill="none"/>
+        <path d="M1160 138 Q1162 112 1166 85" stroke="#8aab8e" stroke-width="1.4" fill="none"/>
       </g>
       <!-- flower heads -->
       <!-- pink daisy -->
-      <g transform="translate(55,45)" opacity="0.9">
+      <g transform="translate(55,85)" opacity="0.9">
         <circle r="3" fill="#c9667a"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#f2c4ce" transform="rotate(0)"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#edb8c5" transform="rotate(60)"/>
@@ -1071,7 +1102,7 @@
         <ellipse cy="-7" rx="2" ry="4.5" fill="#edb8c5" transform="rotate(300)"/>
       </g>
       <!-- cornflower -->
-      <g transform="translate(195,40)" opacity="0.9">
+      <g transform="translate(195,80)" opacity="0.9">
         <circle r="3" fill="#4a6fa5"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#7b9ec4" transform="rotate(0)"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#7b9ec4" transform="rotate(45)"/>
@@ -1083,7 +1114,7 @@
         <ellipse cy="-7" rx="2" ry="4.5" fill="#7b9ec4" transform="rotate(315)"/>
       </g>
       <!-- green -->
-      <g transform="translate(336,42)" opacity="0.9">
+      <g transform="translate(336,82)" opacity="0.9">
         <circle r="3" fill="#4a7a50"/>
         <ellipse cy="-7" rx="1.8" ry="4.5" fill="#7dbe84" transform="rotate(0)"/>
         <ellipse cy="-7" rx="1.8" ry="4.5" fill="#9acfa0" transform="rotate(60)"/>
@@ -1093,7 +1124,7 @@
         <ellipse cy="-7" rx="1.8" ry="4.5" fill="#9acfa0" transform="rotate(300)"/>
       </g>
       <!-- cream daisy -->
-      <g transform="translate(476,40)" opacity="0.9">
+      <g transform="translate(476,80)" opacity="0.9">
         <circle r="3" fill="#f5c97a"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#fdecea" transform="rotate(0)"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#fdecea" transform="rotate(45)"/>
@@ -1105,7 +1136,7 @@
         <ellipse cy="-7" rx="2" ry="4.5" fill="#fdecea" transform="rotate(315)"/>
       </g>
       <!-- pink daisy -->
-      <g transform="translate(616,42)" opacity="0.9">
+      <g transform="translate(616,82)" opacity="0.9">
         <circle r="3" fill="#c9667a"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#edb8c5" transform="rotate(0)"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#f2c4ce" transform="rotate(60)"/>
@@ -1115,7 +1146,7 @@
         <ellipse cy="-7" rx="2" ry="4.5" fill="#f2c4ce" transform="rotate(300)"/>
       </g>
       <!-- cornflower -->
-      <g transform="translate(756,41)" opacity="0.9">
+      <g transform="translate(756,81)" opacity="0.9">
         <circle r="3" fill="#4a6fa5"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#7b9ec4" transform="rotate(0)"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#7b9ec4" transform="rotate(45)"/>
@@ -1127,7 +1158,7 @@
         <ellipse cy="-7" rx="2" ry="4.5" fill="#7b9ec4" transform="rotate(315)"/>
       </g>
       <!-- green wildflower -->
-      <g transform="translate(896,42)" opacity="0.9">
+      <g transform="translate(896,82)" opacity="0.9">
         <circle r="3" fill="#4a7a50"/>
         <ellipse cy="-7" rx="1.8" ry="4.5" fill="#9acfa0" transform="rotate(0)"/>
         <ellipse cy="-7" rx="1.8" ry="4.5" fill="#7dbe84" transform="rotate(60)"/>
@@ -1137,7 +1168,7 @@
         <ellipse cy="-7" rx="1.8" ry="4.5" fill="#7dbe84" transform="rotate(300)"/>
       </g>
       <!-- cream daisy -->
-      <g transform="translate(1036,40)" opacity="0.9">
+      <g transform="translate(1036,80)" opacity="0.9">
         <circle r="3" fill="#f5c97a"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#fdecea" transform="rotate(0)"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#fdecea" transform="rotate(60)"/>
@@ -1147,7 +1178,7 @@
         <ellipse cy="-7" rx="2" ry="4.5" fill="#fdecea" transform="rotate(300)"/>
       </g>
       <!-- pink daisy far right -->
-      <g transform="translate(1166,43)" opacity="0.9">
+      <g transform="translate(1166,83)" opacity="0.9">
         <circle r="3" fill="#c9667a"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#f2c4ce" transform="rotate(0)"/>
         <ellipse cy="-7" rx="2" ry="4.5" fill="#edb8c5" transform="rotate(60)"/>
@@ -1248,137 +1279,100 @@
 
     // Bouquet SVG centred in a 700×90 canvas, sitting on the dividing line (y=45)
     // 7 flowers: cream daisy, pink daisy, blue cornflower, green wildflower × 4 more
-    const bouquetSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 90" preserveAspectRatio="xMidYMid meet" style="display:block;overflow:visible;">
-      <!-- horizontal rules -->
-      <line x1="0"   y1="45" x2="282" y2="45" stroke="#c4a882" stroke-width="0.75" opacity="0.5"/>
-      <line x1="418" y1="45" x2="700" y2="45" stroke="#c4a882" stroke-width="0.75" opacity="0.5"/>
-
-      <!-- BOUQUET centred at x=350, stems rooted at y=82, flowers bloom upward -->
-      <g transform="translate(350,82)">
-
-        <!-- ── STEMS & LEAVES ── -->
-        <!-- stem 1 centre-tall (cream daisy) -->
-        <path d="M0,0 Q1,-18 0,-42" stroke="#8aab8e" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-        <!-- stem 2 left-mid (pink daisy) -->
-        <path d="M0,0 Q-9,-14 -16,-36" stroke="#8aab8e" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-        <!-- stem 3 right-mid (blue cornflower) -->
-        <path d="M0,0 Q10,-14 17,-36" stroke="#8aab8e" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-        <!-- stem 4 far-left (green wildflower) -->
-        <path d="M0,0 Q-20,-12 -30,-30" stroke="#8aab8e" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-        <!-- stem 5 far-right (pink small) -->
-        <path d="M0,0 Q21,-12 31,-30" stroke="#8aab8e" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-        <!-- stem 6 left-low (cream small) -->
-        <path d="M0,0 Q-28,-8 -42,-22" stroke="#7dab82" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-        <!-- stem 7 right-low (cornflower small) -->
-        <path d="M0,0 Q29,-8 43,-22" stroke="#7dab82" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-
-        <!-- leaf left on stem2 -->
-        <path d="M-10,-20 Q-18,-24 -20,-20 Q-14,-17 -10,-20Z" fill="#a8c5ac" opacity="0.75" stroke="none"/>
-        <!-- leaf right on stem3 -->
-        <path d="M10,-20 Q18,-24 20,-20 Q14,-17 10,-20Z" fill="#a8c5ac" opacity="0.75" stroke="none"/>
-        <!-- leaf on stem6 -->
-        <path d="M-26,-12 Q-32,-18 -33,-14 Q-28,-10 -26,-12Z" fill="#8aab8e" opacity="0.65" stroke="none"/>
-        <!-- leaf on stem7 -->
-        <path d="M26,-12 Q32,-18 33,-14 Q28,-10 26,-12Z" fill="#8aab8e" opacity="0.65" stroke="none"/>
-
-        <!-- wrap ribbon at base -->
-        <path d="M-14,0 Q0,-5 14,0" stroke="#c9867a" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
-        <path d="M-12,4 Q0,-1 12,4"  stroke="#c9867a" stroke-width="1"   fill="none" stroke-linecap="round" opacity="0.35"/>
-
-        <!-- ── FLOWER 1 — cream daisy (centre-tall, y=-42) ── -->
-        <g transform="translate(0,-42)">
-          <ellipse rx="4.5" ry="9" fill="#fdecea" opacity="0.9" transform="rotate(0)"/>
-          <ellipse rx="4.5" ry="9" fill="#fdecea" opacity="0.9" transform="rotate(40)"/>
-          <ellipse rx="4.5" ry="9" fill="#fdecea" opacity="0.9" transform="rotate(80)"/>
-          <ellipse rx="4.5" ry="9" fill="#fdecea" opacity="0.9" transform="rotate(120)"/>
-          <ellipse rx="4.5" ry="9" fill="#fdecea" opacity="0.9" transform="rotate(160)"/>
-          <ellipse rx="4.5" ry="9" fill="#fdecea" opacity="0.9" transform="rotate(200)"/>
-          <ellipse rx="4.5" ry="9" fill="#fdecea" opacity="0.9" transform="rotate(240)"/>
-          <ellipse rx="4.5" ry="9" fill="#fdecea" opacity="0.9" transform="rotate(280)"/>
-          <ellipse rx="4.5" ry="9" fill="#fdecea" opacity="0.9" transform="rotate(320)"/>
-          <circle r="7" fill="#f5c97a"/>
-        </g>
-
-        <!-- ── FLOWER 2 — pink daisy (left-mid, x=-16 y=-36) ── -->
-        <g transform="translate(-16,-36) rotate(-12)">
-          <ellipse rx="4" ry="8" fill="#f2c4ce" opacity="0.9" transform="rotate(0)"/>
-          <ellipse rx="4" ry="8" fill="#f2c4ce" opacity="0.9" transform="rotate(45)"/>
-          <ellipse rx="4" ry="8" fill="#edb8c5" opacity="0.9" transform="rotate(90)"/>
-          <ellipse rx="4" ry="8" fill="#f2c4ce" opacity="0.9" transform="rotate(135)"/>
-          <ellipse rx="4" ry="8" fill="#edb8c5" opacity="0.9" transform="rotate(180)"/>
-          <ellipse rx="4" ry="8" fill="#f2c4ce" opacity="0.9" transform="rotate(225)"/>
-          <ellipse rx="4" ry="8" fill="#edb8c5" opacity="0.9" transform="rotate(270)"/>
-          <ellipse rx="4" ry="8" fill="#f2c4ce" opacity="0.9" transform="rotate(315)"/>
-          <circle r="6.5" fill="#c9667a"/>
-        </g>
-
-        <!-- ── FLOWER 3 — blue cornflower (right-mid, x=17 y=-36) ── -->
-        <g transform="translate(17,-36) rotate(10)">
-          <ellipse rx="4" ry="8.5" fill="#7b9ec4" opacity="0.9" transform="rotate(0)"/>
-          <ellipse rx="4" ry="8.5" fill="#7b9ec4" opacity="0.9" transform="rotate(45)"/>
-          <ellipse rx="4" ry="8.5" fill="#7b9ec4" opacity="0.9" transform="rotate(90)"/>
-          <ellipse rx="4" ry="8.5" fill="#7b9ec4" opacity="0.9" transform="rotate(135)"/>
-          <ellipse rx="4" ry="8.5" fill="#7b9ec4" opacity="0.9" transform="rotate(180)"/>
-          <ellipse rx="4" ry="8.5" fill="#7b9ec4" opacity="0.9" transform="rotate(225)"/>
-          <ellipse rx="4" ry="8.5" fill="#7b9ec4" opacity="0.9" transform="rotate(270)"/>
-          <ellipse rx="4" ry="8.5" fill="#7b9ec4" opacity="0.9" transform="rotate(315)"/>
-          <circle r="6" fill="#4a6fa5"/>
-        </g>
-
-        <!-- ── FLOWER 4 — green wildflower (far-left, x=-30 y=-30) ── -->
-        <g transform="translate(-30,-30) rotate(-20)">
-          <ellipse rx="3.5" ry="7" fill="#7dbe84" opacity="0.9" transform="rotate(0)"/>
-          <ellipse rx="3.5" ry="7" fill="#9acfa0" opacity="0.9" transform="rotate(45)"/>
-          <ellipse rx="3.5" ry="7" fill="#7dbe84" opacity="0.9" transform="rotate(90)"/>
-          <ellipse rx="3.5" ry="7" fill="#9acfa0" opacity="0.9" transform="rotate(135)"/>
-          <ellipse rx="3.5" ry="7" fill="#7dbe84" opacity="0.9" transform="rotate(180)"/>
-          <ellipse rx="3.5" ry="7" fill="#9acfa0" opacity="0.9" transform="rotate(225)"/>
-          <ellipse rx="3.5" ry="7" fill="#7dbe84" opacity="0.9" transform="rotate(270)"/>
-          <ellipse rx="3.5" ry="7" fill="#9acfa0" opacity="0.9" transform="rotate(315)"/>
-          <circle r="5" fill="#4a7a50"/>
-        </g>
-
-        <!-- ── FLOWER 5 — pink small (far-right, x=31 y=-30) ── -->
-        <g transform="translate(31,-30) rotate(18)">
-          <ellipse rx="3.5" ry="7" fill="#f2c4ce" opacity="0.9" transform="rotate(0)"/>
-          <ellipse rx="3.5" ry="7" fill="#edb8c5" opacity="0.9" transform="rotate(40)"/>
-          <ellipse rx="3.5" ry="7" fill="#f2c4ce" opacity="0.9" transform="rotate(80)"/>
-          <ellipse rx="3.5" ry="7" fill="#edb8c5" opacity="0.9" transform="rotate(120)"/>
-          <ellipse rx="3.5" ry="7" fill="#f2c4ce" opacity="0.9" transform="rotate(160)"/>
-          <ellipse rx="3.5" ry="7" fill="#edb8c5" opacity="0.9" transform="rotate(200)"/>
-          <ellipse rx="3.5" ry="7" fill="#f2c4ce" opacity="0.9" transform="rotate(240)"/>
-          <ellipse rx="3.5" ry="7" fill="#edb8c5" opacity="0.9" transform="rotate(280)"/>
-          <ellipse rx="3.5" ry="7" fill="#f2c4ce" opacity="0.9" transform="rotate(320)"/>
-          <circle r="5.5" fill="#c9667a"/>
-        </g>
-
-        <!-- ── FLOWER 6 — cream small (far-left-low, x=-42 y=-22) ── -->
-        <g transform="translate(-42,-22) rotate(-30)">
-          <ellipse rx="3" ry="6.5" fill="#fdecea" opacity="0.85" transform="rotate(0)"/>
-          <ellipse rx="3" ry="6.5" fill="#fdecea" opacity="0.85" transform="rotate(40)"/>
-          <ellipse rx="3" ry="6.5" fill="#fdecea" opacity="0.85" transform="rotate(80)"/>
-          <ellipse rx="3" ry="6.5" fill="#fdecea" opacity="0.85" transform="rotate(120)"/>
-          <ellipse rx="3" ry="6.5" fill="#fdecea" opacity="0.85" transform="rotate(160)"/>
-          <ellipse rx="3" ry="6.5" fill="#fdecea" opacity="0.85" transform="rotate(200)"/>
-          <ellipse rx="3" ry="6.5" fill="#fdecea" opacity="0.85" transform="rotate(240)"/>
-          <ellipse rx="3" ry="6.5" fill="#fdecea" opacity="0.85" transform="rotate(280)"/>
-          <ellipse rx="3" ry="6.5" fill="#fdecea" opacity="0.85" transform="rotate(320)"/>
-          <circle r="5" fill="#e8c060"/>
-        </g>
-
-        <!-- ── FLOWER 7 — blue small (far-right-low, x=43 y=-22) ── -->
-        <g transform="translate(43,-22) rotate(25)">
-          <ellipse rx="3" ry="6.5" fill="#7b9ec4" opacity="0.85" transform="rotate(0)"/>
-          <ellipse rx="3" ry="6.5" fill="#adc4e0" opacity="0.85" transform="rotate(45)"/>
-          <ellipse rx="3" ry="6.5" fill="#7b9ec4" opacity="0.85" transform="rotate(90)"/>
-          <ellipse rx="3" ry="6.5" fill="#adc4e0" opacity="0.85" transform="rotate(135)"/>
-          <ellipse rx="3" ry="6.5" fill="#7b9ec4" opacity="0.85" transform="rotate(180)"/>
-          <ellipse rx="3" ry="6.5" fill="#adc4e0" opacity="0.85" transform="rotate(225)"/>
-          <ellipse rx="3" ry="6.5" fill="#7b9ec4" opacity="0.85" transform="rotate(270)"/>
-          <ellipse rx="3" ry="6.5" fill="#adc4e0" opacity="0.85" transform="rotate(315)"/>
-          <circle r="4.5" fill="#3a5f95"/>
-        </g>
-
+    // Mini flower garden divider — same palette as footer garden, ~half the height (70px canvas)
+    // Stems root at y=58, ground line at y=62, flowers bloom above; gradient splits at y=35 (midpoint)
+    const bouquetSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 70" preserveAspectRatio="xMidYMax meet" style="display:block;width:100%;height:70px;">
+      <!-- stems -->
+      <g opacity="0.7">
+        <path d="M60 68 Q58 55 55 42" stroke="#6a9e70" stroke-width="1.2" fill="none"/>
+        <path d="M150 68 Q148 53 146 38" stroke="#8aab8e" stroke-width="1.1" fill="none"/>
+        <path d="M250 68 Q252 52 255 37" stroke="#7dab82" stroke-width="1.2" fill="none"/>
+        <path d="M350 68 Q348 54 345 40" stroke="#6a9e70" stroke-width="1.1" fill="none"/>
+        <path d="M450 68 Q452 52 456 37" stroke="#8aab8e" stroke-width="1.2" fill="none"/>
+        <path d="M550 68 Q548 54 545 40" stroke="#7dab82" stroke-width="1.1" fill="none"/>
+        <path d="M650 68 Q652 52 656 37" stroke="#6a9e70" stroke-width="1.2" fill="none"/>
+        <path d="M750 68 Q748 54 745 40" stroke="#8aab8e" stroke-width="1.1" fill="none"/>
+        <path d="M850 68 Q852 52 856 37" stroke="#7dab82" stroke-width="1.2" fill="none"/>
+        <path d="M950 68 Q948 54 945 40" stroke="#6a9e70" stroke-width="1.1" fill="none"/>
+        <path d="M1050 68 Q1052 52 1056 37" stroke="#8aab8e" stroke-width="1.2" fill="none"/>
+        <path d="M1150 68 Q1148 54 1145 40" stroke="#7dab82" stroke-width="1.1" fill="none"/>
+      </g>
+      <!-- flower heads — same types as footer, scaled down slightly -->
+      <!-- pink daisy -->
+      <g transform="translate(55,40)" opacity="0.85">
+        <circle r="2.5" fill="#c9667a"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#f2c4ce" transform="rotate(0)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#edb8c5" transform="rotate(60)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#f2c4ce" transform="rotate(120)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#edb8c5" transform="rotate(180)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#f2c4ce" transform="rotate(240)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#edb8c5" transform="rotate(300)"/>
+      </g>
+      <!-- cream daisy -->
+      <g transform="translate(250,35)" opacity="0.85">
+        <circle r="2.5" fill="#f5c97a"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(0)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(45)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(90)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(135)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(180)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(225)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(270)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(315)"/>
+      </g>
+      <!-- cornflower -->
+      <g transform="translate(456,35)" opacity="0.85">
+        <circle r="2.5" fill="#4a6fa5"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(0)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(45)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(90)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(135)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(180)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(225)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(270)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(315)"/>
+      </g>
+      <!-- green wildflower -->
+      <g transform="translate(656,36)" opacity="0.85">
+        <circle r="2.5" fill="#4a7a50"/>
+        <ellipse cy="-6" rx="1.5" ry="3.8" fill="#7dbe84" transform="rotate(0)"/>
+        <ellipse cy="-6" rx="1.5" ry="3.8" fill="#9acfa0" transform="rotate(60)"/>
+        <ellipse cy="-6" rx="1.5" ry="3.8" fill="#7dbe84" transform="rotate(120)"/>
+        <ellipse cy="-6" rx="1.5" ry="3.8" fill="#9acfa0" transform="rotate(180)"/>
+        <ellipse cy="-6" rx="1.5" ry="3.8" fill="#7dbe84" transform="rotate(240)"/>
+        <ellipse cy="-6" rx="1.5" ry="3.8" fill="#9acfa0" transform="rotate(300)"/>
+      </g>
+      <!-- pink daisy -->
+      <g transform="translate(856,36)" opacity="0.85">
+        <circle r="2.5" fill="#c9667a"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#edb8c5" transform="rotate(0)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#f2c4ce" transform="rotate(60)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#edb8c5" transform="rotate(120)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#f2c4ce" transform="rotate(180)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#edb8c5" transform="rotate(240)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#f2c4ce" transform="rotate(300)"/>
+      </g>
+      <!-- cornflower -->
+      <g transform="translate(1056,35)" opacity="0.85">
+        <circle r="2.5" fill="#4a6fa5"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(0)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(45)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(90)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(135)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(180)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(225)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(270)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#7b9ec4" transform="rotate(315)"/>
+      </g>
+      <!-- cream daisy far right -->
+      <g transform="translate(1145,38)" opacity="0.85">
+        <circle r="2.5" fill="#f5c97a"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(0)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(60)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(120)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(180)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(240)"/>
+        <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(300)"/>
       </g>
     </svg>`;
 
@@ -1419,8 +1413,7 @@
       const colorBelow = sectionStartColor[id]      || '#fdf8f2';
 
       const wrapper = document.createElement('div');
-      // Gradient background that matches the bottom of the section above → top of section below
-      // The SVG viewBox is 700×90; divider line sits at y=45 (exact midpoint)
+      // SVG is 1200×70; gradient splits at 50% so top half = color above, bottom half = color below
       wrapper.style.cssText = [
         'width:100%',
         'line-height:0',
@@ -1480,20 +1473,28 @@
   </script>
   <script>
     // ── Hamburger nav ───────────────────────────────────────
-    const toggle = document.querySelector('.nav-toggle');
-    const nav    = document.getElementById('main-nav');
-    toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('open');
-      toggle.classList.toggle('open', open);
-      toggle.setAttribute('aria-expanded', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    const toggle  = document.querySelector('.nav-toggle');
+    const nav     = document.getElementById('main-nav');
+    const overlay = document.getElementById('nav-overlay');
+
+    function openNav() {
+      nav.classList.add('open');
+      overlay.classList.add('open');
+      toggle.classList.add('open');
+      toggle.setAttribute('aria-expanded', true);
+    }
+    function closeNav() {
       nav.classList.remove('open');
+      overlay.classList.remove('open');
       toggle.classList.remove('open');
       toggle.setAttribute('aria-expanded', false);
-      document.body.style.overflow = '';
-    }));
+    }
+
+    toggle.addEventListener('click', () => {
+      nav.classList.contains('open') ? closeNav() : openNav();
+    });
+    overlay.addEventListener('click', closeNav);
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
   </script>
 </body>
 </html>
