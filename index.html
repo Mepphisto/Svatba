@@ -108,7 +108,7 @@
         height: 100vh;
         z-index: 150;
         /* fully reset desktop gradient & strip — invisible until open */
-        background: rgba(253,248,242,0.97) !important;
+        background: transparent !important;
         background-image: none !important;
         border: none;
         box-shadow: none;
@@ -127,6 +127,7 @@
                     visibility 0s 0.35s;
       }
       nav.open {
+        background: rgba(253,248,242,0.97) !important;
         transform: translateX(0);
         box-shadow: -8px 0 32px rgba(46,36,32,0.12);
         visibility: visible;
@@ -1412,6 +1413,7 @@
     // Mini flower garden divider — same palette as footer garden, ~half the height (70px canvas)
     // Stems root at y=58, ground line at y=62, flowers bloom above; gradient splits at y=35 (midpoint)
     const bouquetSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 70" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:auto;max-height:50px;">
+    <g transform="translate(0,-13)">
       <!-- stems -->
       <g opacity="0.7">
         <path d="M60 68 Q58 55 55 42" stroke="#6a9e70" stroke-width="1.2" fill="none"/>
@@ -1504,6 +1506,7 @@
         <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(240)"/>
         <ellipse cy="-6" rx="1.7" ry="3.8" fill="#fdecea" transform="rotate(300)"/>
       </g>
+    </g>
     </svg>`;
 
     // Order of sections top-to-bottom so we can look up adjacent colours
@@ -1546,7 +1549,8 @@
       // SVG is 1200×70; gradient splits at 50% so top half = color above, bottom half = color below
       wrapper.style.cssText = [
         'width:100%',
-        'margin:0',
+        'margin-top:-25px',
+        'margin-bottom:0',
         'padding:0',
         'line-height:0',
         'pointer-events:none',
@@ -1554,8 +1558,8 @@
         `background:linear-gradient(to bottom, ${colorAbove} 0%, ${colorAbove} 50%, ${colorBelow} 50%, ${colorBelow} 100%)`,
         'position:relative',
         'left:0',
-        'z-index:1',
-        'overflow:hidden',
+        'z-index:2',
+        'overflow:visible',
       ].join(';');
       wrapper.innerHTML = bouquetSVG;
       section.insertAdjacentElement('beforebegin', wrapper);
