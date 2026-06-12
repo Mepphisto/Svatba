@@ -261,7 +261,7 @@
     p + p { margin-top: 1rem; }
 
     /* ── TIMELINE ───────────────────────────────────────────── */
-    #schedule { background: linear-gradient(135deg, #fdf4ef 0%, #fdf8f2 100%); }
+    #schedule { background: #fdf4ef; }
 
     .timeline {
       position: relative; padding-left: 2.5rem; margin-top: 2.5rem;
@@ -363,7 +363,7 @@
     }
 
     /* ── DRESS CODE ─────────────────────────────────────────── */
-    #dresscode { background: linear-gradient(135deg, #f8ede8 0%, #fdf8f2 100%); }
+    #dresscode { background: #fdf8f2; }
 
     .dress-palette {
       display: flex; gap: 0.8rem; margin: 2rem 0;
@@ -387,7 +387,6 @@
     .dress-note p { font-size: 0.9rem; }
 
     /* ── GIFTS ──────────────────────────────────────────────── */
-    #gifts { background: #fdf8f2; }
 
     .gift-poem {
       font-family: 'Cormorant Garamond', serif;
@@ -420,6 +419,17 @@
       transform: scaleX(-1);
     }
 
+    /* ── GIFTS — mobile fix ─────────────────────────────────── */
+    @media (max-width: 640px) {
+      .gift-poem {
+        padding: 2.5rem 1.5rem;
+      }
+      .gift-poem-floral,
+      .gift-poem-floral-tl {
+        display: none;
+      }
+    }
+
     /* ── FOOTER ─────────────────────────────────────────────── */
     .footer-floral {
       display: block;
@@ -430,7 +440,7 @@
       overflow: visible;
       background: var(--cream);
     }
-    .footer-floral svg { display: block; width: 100%; height: 140px; min-width: 100%; }
+    .footer-floral svg { display: block; width: 100%; height: auto; }
     footer {
       text-align: center; padding: 4rem 2rem;
       background: var(--ink); color: rgba(253,248,242,0.5);
@@ -466,8 +476,8 @@
     .reveal.visible { opacity: 1; transform: none; }
 
     /* ── SVATEBNÍ OBŘAD & HOSTINA INFO GRIDS ───────────────── */
-    #obrad   { background: linear-gradient(135deg, #fdf8f2 0%, #fdf4ef 100%); }
-    #hostina { background: var(--cream); }
+    #obrad   { background: #fdf4ef; }
+    #hostina { background: #fdf8f2; }
 
     .event-card {
       border: 1px solid rgba(201,134,122,0.25);
@@ -543,7 +553,7 @@
     }
 
     /* ── ACCOMMODATION ──────────────────────────────────────── */
-    #ubytovani { background: linear-gradient(135deg, #fdf4ef 0%, #fdf8f2 100%); }
+    #ubytovani { background: #fdf4ef; }
 
     .hotel-card {
       border: 1px solid rgba(201,134,122,0.25);
@@ -579,7 +589,8 @@
     }
 
     /* ── IMPORTANT INFO ─────────────────────────────────────── */
-    #dulezite { background: var(--cream); }
+    #dulezite { background: #fdf8f2; }
+    #gifts    { background: #fdf4ef; }
 
     .info-list {
       margin-top: 2rem; display: flex;
@@ -1185,7 +1196,7 @@
 
   <!-- ── FOOTER ──────────────────────────────────────────────── -->
   <div class="footer-floral" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 140" preserveAspectRatio="none" style="display:block;width:100%;height:140px;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 140" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:auto;">
       <!-- ground fill transition -->
       <path d="M0 140 L1200 140 L1200 110 Q600 100 0 110 Z" fill="var(--ink)" opacity="0.92"/>
       <!-- grassy stems rising from ground -->
@@ -1380,27 +1391,27 @@
       hero:      '#fdf8f2',
       obrad:     '#fdf4ef',
       hostina:   '#fdf8f2',
-      schedule:  '#fdf8f2',
-      dresscode: '#fdf8f2',
-      ubytovani: '#fdf8f2',
-      dulezite:  '#fdf8f2',
-      gifts:     '#fdf8f2',
-    };
-    const sectionTop = {
-      obrad:     '#fdf8f2',
-      hostina:   '#fdf4ef',
       schedule:  '#fdf4ef',
       dresscode: '#fdf8f2',
       ubytovani: '#fdf4ef',
-      dulezite:  '#fdf4ef',
-      gifts:     '#fdf8f2',
+      dulezite:  '#fdf8f2',
+      gifts:     '#fdf4ef',
+    };
+    const sectionTop = {
+      obrad:     '#fdf4ef',
+      hostina:   '#fdf8f2',
+      schedule:  '#fdf4ef',
+      dresscode: '#fdf8f2',
+      ubytovani: '#fdf4ef',
+      dulezite:  '#fdf8f2',
+      gifts:     '#fdf4ef',
     };
 
     // Bouquet SVG centred in a 700×90 canvas, sitting on the dividing line (y=45)
     // 7 flowers: cream daisy, pink daisy, blue cornflower, green wildflower × 4 more
     // Mini flower garden divider — same palette as footer garden, ~half the height (70px canvas)
     // Stems root at y=58, ground line at y=62, flowers bloom above; gradient splits at y=35 (midpoint)
-    const bouquetSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 70" preserveAspectRatio="none" style="display:block;width:100%;height:70px;">
+    const bouquetSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 70" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:auto;max-height:50px;">
       <!-- stems -->
       <g opacity="0.7">
         <path d="M60 68 Q58 55 55 42" stroke="#6a9e70" stroke-width="1.2" fill="none"/>
@@ -1502,21 +1513,21 @@
       hero:      '#fdf8f2',
       obrad:     '#fdf4ef',
       hostina:   '#fdf8f2',
-      schedule:  '#fdf8f2',
+      schedule:  '#fdf4ef',
       dresscode: '#fdf8f2',
-      ubytovani: '#fdf8f2',
+      ubytovani: '#fdf4ef',
       dulezite:  '#fdf8f2',
-      gifts:     '#fdf8f2',
+      gifts:     '#fdf4ef',
     };
     // Dominant background colour for the top-edge of each section
     const sectionStartColor = {
-      obrad:     '#fdf8f2',
-      hostina:   '#fdf4ef',
+      obrad:     '#fdf4ef',
+      hostina:   '#fdf8f2',
       schedule:  '#fdf4ef',
-      dresscode: '#f8ede8',
+      dresscode: '#fdf8f2',
       ubytovani: '#fdf4ef',
-      dulezite:  '#fdf4ef',
-      gifts:     '#fdf8f2',
+      dulezite:  '#fdf8f2',
+      gifts:     '#fdf4ef',
       footer:    '#2e2420',
     };
 
@@ -1544,7 +1555,7 @@
         'position:relative',
         'left:0',
         'z-index:1',
-        'overflow:visible',
+        'overflow:hidden',
       ].join(';');
       wrapper.innerHTML = bouquetSVG;
       section.insertAdjacentElement('beforebegin', wrapper);
