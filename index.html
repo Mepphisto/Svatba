@@ -59,16 +59,15 @@
       position: fixed; top: 1rem; right: 1.2rem; z-index: 200;
       padding: 4px;
       -webkit-appearance: none; appearance: none;
-      overflow: hidden;
     }
     .nav-toggle-bars {
       display: flex; flex-direction: column;
       justify-content: center; gap: 5px;
-      width: 24px; height: 24px;
-      overflow: hidden;
+      width: 24px; height: 16px;
       flex-shrink: 0;
+      position: relative;
     }
-    .nav-toggle span {
+    .nav-toggle-bars span {
       display: block; height: 2px; width: 24px;
       background: var(--muted);
       border-radius: 2px;
@@ -82,12 +81,11 @@
       transition: color 0.3s;
       user-select: none;
       line-height: 1;
-      display: block;
     }
     .nav-toggle.open .nav-toggle-label { color: var(--rose); }
-    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-toggle.open .nav-toggle-bars span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open .nav-toggle-bars span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-toggle.open .nav-toggle-bars span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* Dim overlay behind the panel */
     .nav-overlay {
