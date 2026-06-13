@@ -58,11 +58,15 @@
       background: none; border: none; cursor: pointer;
       position: fixed; top: 1rem; right: 1.2rem; z-index: 200;
       padding: 4px;
+      -webkit-appearance: none; appearance: none;
+      overflow: hidden;
     }
     .nav-toggle-bars {
       display: flex; flex-direction: column;
       justify-content: center; gap: 5px;
-      width: 24px;
+      width: 24px; height: 24px;
+      overflow: hidden;
+      flex-shrink: 0;
     }
     .nav-toggle span {
       display: block; height: 2px; width: 24px;
@@ -77,6 +81,8 @@
       text-transform: uppercase; color: var(--muted);
       transition: color 0.3s;
       user-select: none;
+      line-height: 1;
+      display: block;
     }
     .nav-toggle.open .nav-toggle-label { color: var(--rose); }
     .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -976,6 +982,9 @@
 
       <div class="dress-note">
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;margin-top:0.1rem">
+          <!-- leaves -->
+          <path d="M10 20 Q6 17 7 13 Q9.5 16 10 20Z" fill="#C1A88A"/>
+          <path d="M18 20 Q22 17 21 13 Q18.5 16 18 20Z" fill="#C1A88A"/>
           <!-- petals -->
           <ellipse cx="14" cy="7.5"  rx="1.5" ry="4"   fill="#C1A88A" opacity="0.75" transform="rotate(0   14 14)"/>
           <ellipse cx="14" cy="7.5"  rx="1.5" ry="4"   fill="#C1A88A" opacity="0.75" transform="rotate(40  14 14)"/>
@@ -1055,6 +1064,19 @@
             <strong>Odvoz z večerní párty zajištěn</strong>
             <p>Postaráme se o to, abyste se bezpečně dostali domů. Podrobnosti sdělíme na místě.</p>
           </div> 
+        </div>
+
+        <div class="info-item">
+          <span class="info-icon" style="color: #C1A88A;">
+            <svg class="fi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+              <circle cx="12" cy="13" r="4" />
+            </svg>
+          </span>
+          <div class="info-text">
+            <strong>Sdílejte své fotky ze svatby</strong>
+            <p>Prosíme pouze fotky, bez videí! Své fotografie můžete nahrát do <a href="https://drive.google.com/drive/folders/1Nqw01D5mKmtV__Erd1QhL9xKAfcTEBrC?usp=sharing" target="_blank" rel="noopener" style="color: var(--rose); text-decoration: none; border-bottom: 1px solid var(--dusty-rose); padding-bottom: 1px;">sdíleného alba na Google Disku</a>.</p>
+          </div>
         </div>
 
       </div>
